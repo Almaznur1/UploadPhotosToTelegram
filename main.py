@@ -35,13 +35,18 @@ def get_nasa_apod(token, save_dir):
     urls = []
     for dict in response.json():
         urls.append(dict['url'])
-    
+
     for index, url in enumerate(urls):
+        if not get_file_ext(url):
+            continue
         response = requests.get(url)
         response.raise_for_status()
-        filename = f'{save_dir}/nasa_apod_{index}.jpg'
+        filename = f'{save_dir}/nasa_apod_{index}{get_file_ext(url)}'
         with open(filename, 'wb') as file:
             file.write(response.content)
+
+
+def get_nasa_epic(token, save_dir):
 
 
 def get_file_ext(url):
@@ -57,7 +62,6 @@ def main():
     # fetch_spacex_last_launch(output_dir)
     get_nasa_apod(token, output_dir)
     # url = 'https://example.com/txt/hello%20world.txt?v=9#python'
-    # print(get_file_ext(url))
 
 
 if __name__ == "__main__":
