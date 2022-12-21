@@ -2,6 +2,7 @@ import requests
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 
 def fetch_spacex_last_launch(save_dir):
@@ -30,12 +31,21 @@ def get_nasa_picture_of_the_day(token):
     print(response.json()['url'])
 
 
+def get_file_ext(url):
+    url_parts = urlparse(url)
+    file_ext = os.path.splitext(url_parts.path)
+    return file_ext[1]
+
+
 def main():
     load_dotenv()
-    # token = os.environ["NASA_API_TOKEN"]
-    output_dir = input('Enter output path\n')
-    fetch_spacex_last_launch(output_dir)
+    token = os.environ["NASA_API_TOKEN"]
+
+    # output_dir = input('Enter output path\n')
+    # fetch_spacex_last_launch(output_dir)
     # get_nasa_picture_of_the_day(token)
+    # url = 'https://example.com/txt/hello%20world.txt?v=9#python'
+    # print(get_file_ext(url))
 
 
 if __name__ == "__main__":
