@@ -10,7 +10,7 @@ def fetch_spacex_last_launch(save_dir, id):
         id = 'latest'
     response = requests.get(f'https://api.spacexdata.com/v5/launches/{id}')
     response.raise_for_status()
-    if response.json()['links']['flickr']['original'] == []:
+    if not response.json()['links']['flickr']['original']:
         print('There are no photos of this launch')
         return
     urls = response.json()['links']['flickr']['original']
@@ -28,7 +28,7 @@ def main():
     )
     parser.add_argument(
         '-l', '--launch_id',
-        help='enter launch id for downloading launch photos'
+        help='input launch id for downloading launch photos'
         )
     args = parser.parse_args()
     launch_id = args.launch_id

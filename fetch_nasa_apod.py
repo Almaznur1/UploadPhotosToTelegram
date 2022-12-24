@@ -18,7 +18,7 @@ def fetch_nasa_apod(token, save_dir):
         urls.append(dict['url'])
 
     for index, url in enumerate(urls, 1):
-        if not get_file_ext(url):
+        if not get_file_ext(url):              # skip all urls without files
             continue
         response = requests.get(url)
         response.raise_for_status()

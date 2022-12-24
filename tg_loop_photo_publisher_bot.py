@@ -3,15 +3,10 @@ import os
 from dotenv import load_dotenv
 import time
 import argparse
-from random import shuffle
 from random import choice
 
 
-def publish_photo_by_tgbot(path, delay_in_hours):
-    load_dotenv()
-    token = os.environ['TELEGRAM_BOT_TOKEN']
-    chat_id = os.environ['TELEGRAM_CHANNEL_ID']
-
+def publish_photos_in_loop(path, delay_in_hours, token, chat_id):
     if delay_in_hours is None:
         delay_in_hours = 4
     delay_in_seconds = float(delay_in_hours) * 3600
@@ -30,8 +25,11 @@ def publish_photo_by_tgbot(path, delay_in_hours):
 
 
 def main():
+    load_dotenv()
+    token = os.environ['TELEGRAM_BOT_TOKEN']
+    chat_id = os.environ['TELEGRAM_CHANNEL_ID']
     parser = argparse.ArgumentParser(
-        description='Upload photo to Telegram channel with delay'
+        description='Upload photos to Telegram channel in endless loop'
     )
     parser.add_argument(
         '-d', '--delay',
@@ -39,8 +37,9 @@ def main():
         )
     args = parser.parse_args()
     delay = args.delay
-    path = input('Enter the directory from which you want to publish photos:\n')
-    publish_photo_by_tgbot(path, delay)
+
+    path = input('Enter the path from which you want to publish photos:\n')
+    publish_photos_in_loop(path, delay, token, chat_id)
 
 
 if __name__ == "__main__":
