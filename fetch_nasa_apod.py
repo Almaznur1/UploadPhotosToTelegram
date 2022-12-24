@@ -12,7 +12,7 @@ def fetch_nasa_apod(token, save_dir):
     params = {'api_key': token, 'start_date': '2022-12-01', 'end_date': ''}
     response = requests.get(url, params=params)
     response.raise_for_status()
-    print(response.json())
+
     urls = []
     for dict in response.json():
         urls.append(dict['url'])
