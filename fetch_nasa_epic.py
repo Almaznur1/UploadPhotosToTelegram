@@ -13,9 +13,11 @@ def fetch_nasa_epic(token, save_dir):
     params = {'api_key': token}
     response = requests.get(url, params=params)
     response.raise_for_status()
-    data_of_photos = []
-    for photo in response.json():
-        data_of_photos.append((photo['image'], photo['date']))
+
+    data_of_photos = [
+        (photo['image'], photo['date'])
+        for photo in response.json()
+        ]
 
     # downloading photos
     for index, photo in enumerate(data_of_photos, 1):

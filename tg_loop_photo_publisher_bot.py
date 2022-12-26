@@ -28,8 +28,7 @@ def main():
     load_dotenv()
     token = os.environ['TELEGRAM_BOT_TOKEN']
     chat_id = os.environ['TELEGRAM_CHANNEL_ID']
-    print(token)
-    print(chat_id)
+    
     parser = argparse.ArgumentParser(
         description='Upload photos to Telegram channel in endless loop'
     )

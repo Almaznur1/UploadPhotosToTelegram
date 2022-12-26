@@ -19,6 +19,7 @@ def main():
     load_dotenv()
     token = os.environ['TELEGRAM_BOT_TOKEN']
     chat_id = os.environ['TELEGRAM_CHANNEL_ID']
+    
     parser = argparse.ArgumentParser(
         description='Upload photo to Telegram channel'
     )
