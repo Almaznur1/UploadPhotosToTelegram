@@ -7,10 +7,7 @@ from random import choice
 
 def publish_photo(path, token, chat_id):
     if not os.path.isfile(path):
-        path = f'{os.path.dirname(os.path.abspath(__file__))}\{path}\{choice(os.listdir(path=path))}'
-    # filesindir = os.listdir(path=path)
-    # if file is None:
-    #     file = choice(filesindir)
+        path = f'{path}/{choice(os.listdir(path=path))}'
     bot = telegram.Bot(token=token)
     bot.send_document(
             chat_id=chat_id,
