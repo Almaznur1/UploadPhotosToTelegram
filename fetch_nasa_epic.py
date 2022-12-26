@@ -8,7 +8,6 @@ import argparse
 def fetch_nasa_epic(token, save_dir):
     save_dir = make_save_dir(save_dir)
 
-    # getting data of photos
     url = 'https://api.nasa.gov/EPIC/api/natural/'
     params = {'api_key': token}
     response = requests.get(url, params=params)
@@ -19,15 +18,14 @@ def fetch_nasa_epic(token, save_dir):
         for photo in response.json()
         ]
 
-    # downloading photos
     for index, photo in enumerate(data_of_photos, 1):
-        file = photo[0]
+        filename = photo[0]
         date = photo[1][:10].replace('-', '/')
-        url = f'https://api.nasa.gov/EPIC/archive/natural/{date}/png/{file}.png'
+        url = f'https://api.nasa.gov/EPIC/archive/natural/{date}/png/{filename}.png'
         response = requests.get(url, params=params)
         response.raise_for_status()
-        filename = f'{save_dir}/nasa_epic_{index}.png'
-        with open(filename, 'wb') as file:
+        filepath = f'{save_dir}/nasa_epic_{index}.png'
+        with open(filepath, 'wb') as file:
             file.write(response.content)
 
 

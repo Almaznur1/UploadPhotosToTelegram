@@ -21,8 +21,8 @@ def fetch_nasa_apod(token, save_dir):
             continue
         response = requests.get(url)
         response.raise_for_status()
-        filename = f'{save_dir}/nasa_apod_{index}{get_file_ext(url)}'
-        with open(filename, 'wb') as file:
+        filepath = f'{save_dir}/nasa_apod_{index}{get_file_ext(url)}'
+        with open(filepath, 'wb') as file:
             file.write(response.content)
 
 

@@ -6,8 +6,12 @@ from random import choice
 
 
 def publish_photo(path, token, chat_id):
+    if not os.path.isabs(path):  # relative path case
+        path = f'{os.path.dirname(os.path.abspath(__file__))}/{path}'
+
     if not os.path.isfile(path):
         path = f'{path}/{choice(os.listdir(path=path))}'
+
     bot = telegram.Bot(token=token)
     bot.send_document(
             chat_id=chat_id,
@@ -19,7 +23,7 @@ def main():
     load_dotenv()
     token = os.environ['TELEGRAM_BOT_TOKEN']
     chat_id = os.environ['TELEGRAM_CHANNEL_ID']
-    
+
     parser = argparse.ArgumentParser(
         description='Upload photo to Telegram channel'
     )

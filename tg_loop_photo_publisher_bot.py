@@ -7,18 +7,21 @@ from random import choice
 
 
 def publish_photos_in_loop(path, delay_in_hours, token, chat_id):
+    if not os.path.isabs(path):  # relative path case
+        path = f'{os.path.dirname(os.path.abspath(__file__))}/{path}'
+
     if delay_in_hours is None:
         delay_in_hours = 4
     delay_in_seconds = float(delay_in_hours) * 3600
     filesindir = os.listdir(path=path)
     bot = telegram.Bot(token=token)
     while True:
-        chosen_file = choice(filesindir)
+        filename = choice(filesindir)
         bot.send_document(
             chat_id=chat_id,
-            document=open(f'{path}/{chosen_file}', 'rb')
+            document=open(f'{path}/{filename}', 'rb')
             )
-        filesindir.remove(chosen_file)
+        filesindir.remove(filename)
         if not filesindir:
             filesindir = os.listdir(path=path)
         time.sleep(delay_in_seconds)
@@ -28,7 +31,7 @@ def main():
     load_dotenv()
     token = os.environ['TELEGRAM_BOT_TOKEN']
     chat_id = os.environ['TELEGRAM_CHANNEL_ID']
-    
+
     parser = argparse.ArgumentParser(
         description='Upload photos to Telegram channel in endless loop'
     )

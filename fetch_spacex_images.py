@@ -17,8 +17,8 @@ def fetch_spacex_images(save_dir, id):
     for index, url in enumerate(urls, 1):
         response = requests.get(url)
         response.raise_for_status()
-        filename = f'{save_dir}/spacex_{index}.jpg'
-        with open(filename, 'wb') as file:
+        filepath = f'{save_dir}/spacex_{index}.jpg'
+        with open(filepath, 'wb') as file:
             file.write(response.content)
 
 
