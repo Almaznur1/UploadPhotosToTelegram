@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from common_functions import make_save_dir
 from common_functions import get_file_ext
+import argparse
 
 
 def fetch_nasa_apod(token, save_dir):
@@ -30,7 +31,13 @@ def fetch_nasa_apod(token, save_dir):
 def main():
     load_dotenv()
     token = os.environ['NASA_API_TOKEN']
-    output_dir = input('Enter output directory path:\n')
+
+    parser = argparse.ArgumentParser(
+        description='Downloading NASA pictures')
+    parser.add_argument('path', help='enter output directory path')
+    args = parser.parse_args()
+    output_dir = args.path
+
     fetch_nasa_apod(token, output_dir)
 
 

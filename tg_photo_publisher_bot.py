@@ -5,14 +5,16 @@ import argparse
 from random import choice
 
 
-def publish_photo(path, file, token, chat_id):
-    filesindir = os.listdir(path=path)
-    if file is None:
-        file = choice(filesindir)
+def publish_photo(path, token, chat_id):
+    if not os.path.isfile(path):
+        path = f'{os.path.dirname(os.path.abspath(__file__))}\{path}\{choice(os.listdir(path=path))}'
+    # filesindir = os.listdir(path=path)
+    # if file is None:
+    #     file = choice(filesindir)
     bot = telegram.Bot(token=token)
     bot.send_document(
             chat_id=chat_id,
-            document=open(f'{path}/{file}', 'rb')
+            document=open(path, 'rb')
             )
 
 
@@ -24,14 +26,13 @@ def main():
         description='Upload photo to Telegram channel'
     )
     parser.add_argument(
-        '-f', '--file',
-        help='enter file name you want to publish'
+        'path',
+        help='enter file or directory path you want to publish'
         )
     args = parser.parse_args()
-    file = args.file
+    path = args.path
 
-    path = input('Enter the path from which you want to publish photo:\n')
-    publish_photo(path, file, token, chat_id)
+    publish_photo(path, token, chat_id)
 
 
 if __name__ == "__main__":

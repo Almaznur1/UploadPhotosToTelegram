@@ -28,6 +28,8 @@ def main():
     load_dotenv()
     token = os.environ['TELEGRAM_BOT_TOKEN']
     chat_id = os.environ['TELEGRAM_CHANNEL_ID']
+    print(token)
+    print(chat_id)
     parser = argparse.ArgumentParser(
         description='Upload photos to Telegram channel in endless loop'
     )
@@ -35,10 +37,12 @@ def main():
         '-d', '--delay',
         help='set upload delay in hours. You can enter a floating point number'
         )
+    parser.add_argument(
+        'path', help='enter the path from which you want to publish photos')
     args = parser.parse_args()
+    path = args.path
     delay = args.delay
 
-    path = input('Enter the path from which you want to publish photos:\n')
     publish_photos_in_loop(path, delay, token, chat_id)
 
 

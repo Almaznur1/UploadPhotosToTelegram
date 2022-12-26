@@ -3,7 +3,7 @@ from common_functions import make_save_dir
 import argparse
 
 
-def fetch_spacex_last_launch(save_dir, id):
+def fetch_spacex_images(save_dir, id):
     save_dir = make_save_dir(save_dir)
 
     if id is None:
@@ -30,11 +30,12 @@ def main():
         '-l', '--launch_id',
         help='input launch id for downloading launch photos'
         )
+    parser.add_argument('path', help='enter output directory path')
     args = parser.parse_args()
     launch_id = args.launch_id
+    output_dir = args.path
 
-    output_dir = input('Enter output directory path:\n')
-    fetch_spacex_last_launch(output_dir, launch_id)
+    fetch_spacex_images(output_dir, launch_id)
 
 
 if __name__ == "__main__":

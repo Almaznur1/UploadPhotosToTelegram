@@ -2,6 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from common_functions import make_save_dir
+import argparse
 
 
 def fetch_nasa_epic(token, save_dir):
@@ -31,7 +32,13 @@ def fetch_nasa_epic(token, save_dir):
 def main():
     load_dotenv()
     token = os.environ['NASA_API_TOKEN']
-    output_dir = input('Enter output directory path:\n')
+
+    parser = argparse.ArgumentParser(
+        description='Downloading NASA Earth photos')
+    parser.add_argument('path', help='enter output directory path')
+    args = parser.parse_args()
+    output_dir = args.path
+
     fetch_nasa_epic(token, output_dir)
 
 
