@@ -17,10 +17,11 @@ def publish_photos_in_loop(path, delay_in_hours, token, chat_id):
     bot = telegram.Bot(token=token)
     while True:
         filename = choice(filesindir)
-        bot.send_document(
-            chat_id=chat_id,
-            document=open(f'{path}/{filename}', 'rb')
-            )
+        with open(f'{path}/{filename}', 'rb') as file:
+            bot.send_document(
+                chat_id=chat_id,
+                document=file
+                )
         filesindir.remove(filename)
         if not filesindir:
             filesindir = os.listdir(path=path)

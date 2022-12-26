@@ -13,9 +13,10 @@ def publish_photo(path, token, chat_id):
         path = f'{path}/{choice(os.listdir(path=path))}'
 
     bot = telegram.Bot(token=token)
-    bot.send_document(
+    with open(path, 'rb') as file:
+        bot.send_document(
             chat_id=chat_id,
-            document=open(path, 'rb')
+            document=file
             )
 
 
