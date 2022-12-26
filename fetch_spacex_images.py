@@ -6,8 +6,6 @@ import argparse
 def fetch_spacex_images(save_dir, id):
     save_dir = make_save_dir(save_dir)
 
-    if id is None:
-        id = 'latest'
     response = requests.get(f'https://api.spacexdata.com/v5/launches/{id}')
     response.raise_for_status()
     if not response.json()['links']['flickr']['original']:
@@ -27,7 +25,7 @@ def main():
         description='Downloading spacex launch photo by id'
     )
     parser.add_argument(
-        '-l', '--launch_id',
+        '-l', '--launch_id', default='latest',
         help='input launch id for downloading launch photos'
         )
     parser.add_argument('path', help='enter output directory path')
