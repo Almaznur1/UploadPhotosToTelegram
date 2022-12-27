@@ -13,12 +13,12 @@ def fetch_nasa_epic(token, save_dir):
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    data_of_photos = [
+    photos = [
         (photo['image'], photo['date'])
         for photo in response.json()
         ]
 
-    for index, photo in enumerate(data_of_photos, 1):
+    for index, photo in enumerate(photos, 1):
         filename = photo[0]
         date = photo[1][:10].replace('-', '/')
         url = f'https://api.nasa.gov/EPIC/archive/natural/{date}/png/{filename}.png'
